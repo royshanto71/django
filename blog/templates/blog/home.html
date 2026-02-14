@@ -3,25 +3,44 @@
 {% block title %}Home - My Blog{% endblock %}
 
 {% block content %}
-    <h2>Recent Posts</h2>
-    
-    {% if posts %}
-        {% for post in posts %}
-            <div class="post">
-                <h2><a href="{% url 'blog:post_detail' post.pk %}">{{ post.title }}</a></h2>
-                <div class="post-meta">
-                    By {{ post.author }} | {{ post.created_at|date:"F d, Y" }}
-                </div>
-                <div class="post-content">
-                    {{ post.content|truncatewords:50 }}
-                </div>
-                <a href="{% url 'blog:post_detail' post.pk %}" class="btn">Read More</a>
+    <div class="content-wrapper">
+        {% if posts %}
+            {% for post in posts %}
+                {% if forloop.first %}
+                    <article class="post featured-post">
+                        <h2><a href="{% url 'blog:post_detail' post.pk %}">{{ post.title }}</a></h2>
+                        <div class="post-meta">
+                            <span class="author">{{ post.author }}</span>
+                            <span class="separator">|</span>
+                            <span class="date">{{ post.created_at|date:"F d, Y" }}</span>
+                            <span class="separator">|</span>
+                            <span class="time">{{ post.created_at|date:"g:i A" }}</span>
+                        </div>
+                        <div class="post-content">
+                            {{ post.content|truncatewords:80 }}
+                        </div>
+                        <a href="{% url 'blog:post_detail' post.pk %}" class="read-more">Read Full Article <span>→</span></a>
+                    </article>
+                {% else %}
+                    <article class="post">
+                        <h2><a href="{% url 'blog:post_detail' post.pk %}">{{ post.title }}</a></h2>
+                        <div class="post-meta">
+                            <span class="author">{{ post.author }}</span>
+                            <span class="separator">|</span>
+                            <span class="date">{{ post.created_at|date:"F d, Y" }}</span>
+                        </div>
+                        <div class="post-content">
+                            {{ post.content|truncatewords:40 }}
+                        </div>
+                        <a href="{% url 'blog:post_detail' post.pk %}" class="read-more">Continue Reading <span>→</span></a>
+                    </article>
+                {% endif %}
+            {% endfor %}
+        {% else %}
+            <div class="empty-state">
+                <p>No articles published yet. Please check back later!</p>
+                <a href="/admin/" class="btn">Admin Panel</a>
             </div>
-        {% endfor %}
-    {% else %}
-        <div class="post">
-            <p>No posts yet. Create some posts in the admin panel!</p>
-            <a href="/admin/" class="btn">Go to Admin</a>
-        </div>
-    {% endif %}
+        {% endif %}
+    </div>
 {% endblock %}

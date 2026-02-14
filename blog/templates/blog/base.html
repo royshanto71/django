@@ -4,94 +4,417 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{% block title %}My Blog{% endblock %}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;500;600;700&family=Noto+Serif+Bengali:wght@400;600;700&family=Merriweather:wght@300;400;700;900&family=Libre+Baskerville:wght@400;700&display=swap" rel="stylesheet">
     <style>
       * {
         margin: 0;
         padding: 0;
         box-sizing: border-box;
       }
+      
+      :root {
+        --prothom-alo-red: #c8102e;
+        --prothom-alo-dark: #9d0a23;
+        --prothom-alo-light: #e8324f;
+        --text-dark: #1a1a1a;
+        --text-gray: #4a4a4a;
+        --text-light: #6a6a6a;
+        --bg-light: #f5f5f5;
+        --bg-cream: #fafafa;
+        --white: #ffffff;
+        --border-gray: #ddd;
+        --border-light: #e8e8e8;
+        --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.06);
+        --shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+        --shadow-md: 0 4px 8px rgba(0, 0, 0, 0.1);
+      }
+      
       body {
-        font-family: Arial, sans-serif;
-        line-height: 1.6;
-        background-color: #f4f4f4;
-        color: #333;
+        font-family: 'Noto Sans Bengali', 'Merriweather', Georgia, serif;
+        line-height: 1.75;
+        background: var(--bg-cream);
+        color: var(--text-dark);
+        min-height: 100vh;
       }
+      
       .container {
-        max-width: 800px;
+        max-width: 1200px;
         margin: 0 auto;
-        padding: 20px;
+        padding: 0 20px 40px;
       }
+      
+      .masthead {
+        background: var(--white);
+        border-bottom: 4px solid var(--prothom-alo-red);
+        padding: 0;
+        margin-bottom: 0;
+      }
+      
+      .top-bar {
+        background: var(--prothom-alo-red);
+        color: var(--white);
+        padding: 8px 0;
+        font-size: 0.85rem;
+      }
+      
+      .top-bar .container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 20px;
+      }
+      
+      .current-date {
+        font-weight: 500;
+      }
+      
+      .edition {
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+      
       header {
-        background-color: #333;
-        color: #fff;
-        padding: 20px 0;
+        background: var(--white);
+        padding: 30px 0 20px;
         text-align: center;
+        margin-bottom: 0;
+        box-shadow: var(--shadow-sm);
+      }
+      
+      header h1 {
+        font-family: 'Noto Serif Bengali', 'Libre Baskerville', serif;
+        font-size: 4rem;
+        font-weight: 700;
+        color: var(--prothom-alo-red);
+        letter-spacing: -0.02em;
+        margin-bottom: 5px;
+        text-transform: uppercase;
+      }
+      
+      header a {
+        text-decoration: none;
+        color: inherit;
+        transition: opacity 0.2s ease;
+      }
+      
+      header a:hover {
+        opacity: 0.85;
+      }
+      
+      .subtitle {
+        color: var(--text-gray);
+        font-size: 0.95rem;
+        font-weight: 400;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        border-top: 1px solid var(--border-light);
+        padding-top: 10px;
+        margin-top: 5px;
+      }
+      
+      .news-bar {
+        background: var(--bg-light);
+        border-bottom: 1px solid var(--border-gray);
+        padding: 12px 0;
         margin-bottom: 30px;
       }
-      header h1 {
-        font-size: 2.5rem;
-      }
-      header a {
-        color: #fff;
-        text-decoration: none;
-      }
-      .post {
-        background: #fff;
-        padding: 20px;
-        margin-bottom: 20px;
-        border-radius: 5px;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-      }
-      .post h2 {
-        color: #333;
-        margin-bottom: 10px;
-      }
-      .post h2 a {
-        color: #333;
-        text-decoration: none;
-      }
-      .post h2 a:hover {
-        color: #007bff;
-      }
-      .post-meta {
-        color: #666;
+      
+      .section-label {
+        font-family: 'Noto Sans Bengali', sans-serif;
+        color: var(--prothom-alo-red);
+        font-weight: 700;
         font-size: 0.9rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        border-left: 4px solid var(--prothom-alo-red);
+        padding-left: 12px;
+        margin-bottom: 20px;
+      }
+      
+      .page-title {
+        font-family: 'Noto Serif Bengali', 'Libre Baskerville', serif;
+        font-size: 2rem;
+        font-weight: 700;
+        color: var(--text-dark);
+        margin-bottom: 25px;
+        padding-bottom: 10px;
+        border-bottom: 3px solid var(--prothom-alo-red);
+        display: inline-block;
+      }
+      
+      .post {
+        background: var(--white);
+        padding: 0 0 25px 0;
+        margin-bottom: 30px;
+        border-bottom: 2px solid var(--border-light);
+        transition: all 0.2s ease;
+        position: relative;
+      }
+      
+      .post:hover {
+        border-bottom-color: var(--prothom-alo-red);
+      }
+      
+      .featured-post {
+        border: 1px solid var(--border-gray);
+        padding: 25px;
+        margin-bottom: 35px;
+        box-shadow: var(--shadow);
+      }
+      
+      .featured-post:hover {
+        box-shadow: var(--shadow-md);
+        border-color: var(--prothom-alo-red);
+      }
+      
+      .post h2 {
+        font-family: 'Noto Serif Bengali', 'Merriweather', serif;
+        color: var(--text-dark);
+        margin-bottom: 10px;
+        font-size: 1.75rem;
+        line-height: 1.4;
+        font-weight: 700;
+      }
+      
+      .post h2 a {
+        color: var(--text-dark);
+        text-decoration: none;
+        transition: color 0.2s ease;
+      }
+      
+      .post h2 a:hover {
+        color: var(--prothom-alo-red);
+      }
+      
+      .featured-post h2 {
+        font-size: 2.25rem;
         margin-bottom: 15px;
       }
-      .post-content {
-        color: #555;
-        line-height: 1.8;
+      
+      .post-meta {
+        color: var(--text-light);
+        font-size: 0.8125rem;
+        font-weight: 400;
+        margin-bottom: 15px;
+        font-family: 'Noto Sans Bengali', sans-serif;
+        text-transform: uppercase;
+        letter-spacing: 0.3px;
       }
+      
+      .post-meta .author {
+        color: var(--prothom-alo-red);
+        font-weight: 600;
+      }
+      
+      .post-meta .separator {
+        margin: 0 6px;
+        color: var(--border-gray);
+      }
+      
+      .post-content {
+        color: var(--text-dark);
+        line-height: 1.8;
+        font-size: 1rem;
+        margin-bottom: 18px;
+        font-family: 'Noto Sans Bengali', Georgia, serif;
+        text-align: justify;
+      }
+      
       .btn {
         display: inline-block;
-        padding: 8px 16px;
-        background-color: #007bff;
-        color: #fff;
+        padding: 10px 24px;
+        background: var(--prothom-alo-red);
+        color: var(--white);
         text-decoration: none;
-        border-radius: 3px;
-        margin-top: 10px;
+        border: 2px solid var(--prothom-alo-red);
+        font-weight: 600;
+        font-size: 0.875rem;
+        transition: all 0.2s ease;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        font-family: 'Noto Sans Bengali', sans-serif;
       }
+      
       .btn:hover {
-        background-color: #0056b3;
+        background: var(--white);
+        color: var(--prothom-alo-red);
       }
+      
+      .read-more {
+        color: var(--prothom-alo-red);
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 0.9rem;
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        transition: gap 0.2s ease;
+      }
+      
+      .read-more:hover {
+        gap: 8px;
+        text-decoration: underline;
+      }
+      
       .back-link {
-        display: inline-block;
-        margin-bottom: 20px;
-        color: #007bff;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 25px;
+        color: var(--prothom-alo-red);
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 0.9rem;
+        padding: 8px 16px;
+        background: var(--white);
+        border: 1px solid var(--border-gray);
+        transition: all 0.2s ease;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+      
+      .back-link:hover {
+        background: var(--prothom-alo-red);
+        color: var(--white);
+        border-color: var(--prothom-alo-red);
+        gap: 10px;
+      }
+      
+      .empty-state {
+        text-align: center;
+        padding: 60px 40px;
+        background: var(--bg-light);
+        border: 2px dashed var(--border-gray);
+      }
+      
+      .empty-state p {
+        font-size: 1.125rem;
+        color: var(--text-gray);
+        margin-bottom: 24px;
+      }
+      
+      .content-wrapper {
+        background: var(--white);
+        padding: 30px;
+        margin-bottom: 30px;
+        border: 1px solid var(--border-light);
+        box-shadow: var(--shadow-sm);
+      }
+      
+      @media (max-width: 768px) {
+        header h1 {
+          font-size: 2.5rem;
+        }
+        
+        .page-title {
+          font-size: 1.5rem;
+        }
+        
+        .post {
+          padding: 0 0 20px 0;
+        }
+        
+        .featured-post {
+          padding: 20px;
+        }
+        
+        .post h2 {
+          font-size: 1.375rem;
+        }
+        
+        .featured-post h2 {
+          font-size: 1.75rem;
+        }
+        
+        .container {
+          padding: 0 15px 30px;
+        }
+        
+        .content-wrapper {
+          padding: 20px;
+        }
+      }
+      
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      
+      .post {
+        animation: fadeIn 0.4s ease forwards;
+      }
+      
+      .post:nth-child(2) { animation-delay: 0.05s; }
+      .post:nth-child(3) { animation-delay: 0.1s; }
+      .post:nth-child(4) { animation-delay: 0.15s; }
+      .post:nth-child(5) { animation-delay: 0.2s; }
+      
+      footer {
+        background: var(--text-dark);
+        color: var(--white);
+        text-align: center;
+        padding: 20px;
+        margin-top: 50px;
+        font-size: 0.875rem;
+        border-top: 3px solid var(--prothom-alo-red);
+      }
+      
+      footer a {
+        color: var(--prothom-alo-red);
         text-decoration: none;
       }
-      .back-link:hover {
+      
+      footer a:hover {
         text-decoration: underline;
       }
     </style>
   </head>
   <body>
-    <header>
+    <div class="top-bar">
       <div class="container">
-        <h1><a href="{% url 'blog:home' %}">My Blog</a></h1>
+        <div class="current-date" id="currentDate"></div>
+        <div class="edition">Online Edition</div>
       </div>
-    </header>
+    </div>
+    
+    <div class="masthead">
+      <header>
+        <div class="container">
+          <h1><a href="{% url 'blog:home' %}">My Blog</a></h1>
+          <p class="subtitle">Daily News & Articles</p>
+        </div>
+      </header>
+    </div>
+
+    <div class="news-bar">
+      <div class="container">
+        <div class="section-label">Latest Articles</div>
+      </div>
+    </div>
 
     <div class="container">{% block content %} {% endblock %}</div>
+    
+    <footer>
+      <div class="container">
+        <p>&copy; 2026 My Blog. All rights reserved. | <a href="/admin/">Admin Panel</a></p>
+      </div>
+    </footer>
+    
+    <script>
+      // Display current date
+      const dateElement = document.getElementById('currentDate');
+      const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+      const today = new Date();
+      dateElement.textContent = today.toLocaleDateString('en-US', options);
+    </script>
   </body>
 </html>
