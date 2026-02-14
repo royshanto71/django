@@ -7,6 +7,9 @@
     
     <article class="content-wrapper">
         <div class="post featured-post" style="border: none; padding: 0; margin: 0; box-shadow: none;">
+            {% if post.category %}
+                <span class="category-badge">{{ post.category.name }}</span>
+            {% endif %}
             <h2 style="font-size: 2.5rem; line-height: 1.3; margin-bottom: 20px;">{{ post.title }}</h2>
             <div class="post-meta" style="margin-bottom: 25px; padding-bottom: 15px; border-bottom: 1px solid var(--border-light);">
                 <span class="author">{{ post.author }}</span>
