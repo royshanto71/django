@@ -1,0 +1,27 @@
+{% extends 'blog/base.html' %}
+
+{% block title %}Home - My Blog{% endblock %}
+
+{% block content %}
+    <h2>Recent Posts</h2>
+    
+    {% if posts %}
+        {% for post in posts %}
+            <div class="post">
+                <h2><a href="{% url 'blog:post_detail' post.pk %}">{{ post.title }}</a></h2>
+                <div class="post-meta">
+                    By {{ post.author }} | {{ post.created_at|date:"F d, Y" }}
+                </div>
+                <div class="post-content">
+                    {{ post.content|truncatewords:50 }}
+                </div>
+                <a href="{% url 'blog:post_detail' post.pk %}" class="btn">Read More</a>
+            </div>
+        {% endfor %}
+    {% else %}
+        <div class="post">
+            <p>No posts yet. Create some posts in the admin panel!</p>
+            <a href="/admin/" class="btn">Go to Admin</a>
+        </div>
+    {% endif %}
+{% endblock %}
